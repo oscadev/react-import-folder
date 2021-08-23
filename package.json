@@ -1,6 +1,6 @@
 {
   "name": "react-import-folder",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Point to a folder that contains images and it'll create a JS file with those images imported, and an array of objects for those images (including the image itself, and the filename).",
   "main": "index.js",
   "scripts": {
