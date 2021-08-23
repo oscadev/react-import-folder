@@ -100,8 +100,6 @@ Assumptions the package makes:
 
 1. The "display name" feature assumes that the filenames contain the working display name that you wish to use. If you dont need the filenames at all, it doesnt matter what they are named in that case.
 
-2. It assumes there are no sub-directories (it will skip folders inside the folder).
-
 <!-- ### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
@@ -143,15 +141,19 @@ This is an example of how to list things you need to use the software and how to
    react-import-folder ./relative/path/to/images
 ```
 
-This will create a new js file in the current directory called imgImports.js with all the imports filled in, as well as an array of objects that contain all the images, and their display name. Then, simply import the array object into your react js file that needs the images.
+3. By default, it only looks for image files in the directory you point it to. If you want it to also search sub-directories, add the 'all' flag. It will add all images found in subdirectories to the array, and you can use the image object "folder" value to differentiate.
+
+```sh
+   react-import-folder ./relative/path/to/images all
+```
+
+This will create a new js file in the current directory called imgImports.js with all the imports filled in, as well as an array of objects that contain all the images, their display name, and the folder location they are in. Then, simply import the array object into your react js file that needs the images.
 
 <!-- ROADMAP -->
 
 ## Roadmap
 
 1. The package assumes that the image files are named with their correct intended display names such as Bruce Wayne.png (if you intend on using the display name at all). I will add support for dealing with badly named assets such as \_bruce-wayne.png.
-
-2. Only looks in the folder you point to, and does not look in sub-folders inside. I will add the ability to recurisively scan sub-directories (optionally).
 
 See the [open issues](https://github.com/oscadev/react-import-folder/issues) for a list of proposed features (and known issues).
 
