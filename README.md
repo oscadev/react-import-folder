@@ -109,21 +109,14 @@ This is an example of how to list things you need to use the software and how to
   npm install npm@latest -g
   ```
 
+<!-- ### Installation -->
+
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+3. Install NPM package globally
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   npm install -g react-import-folder
    ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```JS
-   const API_KEY = 'ENTER YOUR API';
-   ``` -->
 
 <!-- USAGE EXAMPLES -->
 
