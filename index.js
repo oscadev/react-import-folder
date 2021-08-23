@@ -62,7 +62,7 @@ fs.readdir(path, function (err, files) {
       validVarName = file.slice(0, len - (len - lastPeriodPosition));
       filenameWithoutExt = validVarName;
 
-      //remove spaces or dashes
+      //replace forbidden chars with underscore
       for (let i = 0; i < validVarName.length; i++) {
         if (forbidden.includes(validVarName[i])) {
           validVarName = validVarName.replaceAtIndex(i, "_");
@@ -81,6 +81,6 @@ fs.readdir(path, function (err, files) {
 
   fs.writeFile("imgImports.js", output, function (err) {
     if (err) return console.log(err);
-    console.log("Hello World > helloworld.txt");
+    console.log("imgImports.js has been created.");
   });
 });
