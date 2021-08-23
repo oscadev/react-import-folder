@@ -1,7 +1,30 @@
 #!/usr/bin/env node
-const path = process.argv[2] || null;
+let path = process.argv[2] || null;
 const fs = require("fs");
 
+//strip potential ending forward slash
+if (path[path.length - 1] === "/") {
+  path = path.slice(0, path.length - 1);
+}
+
+//files to import
+const importThese = [
+  "png",
+  "jpg",
+  "jpeg",
+  "gif",
+  "webp",
+  "tiff",
+  "psd",
+  "raw",
+  "bmp",
+  "heif",
+  "indd",
+  "svg",
+  "ai",
+  "eps",
+  "pdf",
+];
 String.prototype.replaceAtIndex = function (_index, _newValue) {
   return (
     this.substr(0, _index) + _newValue + this.substr(_index + _newValue.length)
@@ -17,7 +40,7 @@ if (!path) {
 
 let output = "";
 let data = "";
-let forbidden = ["-", " ", "", "."];
+let forbidden = ["-", " ", "", ".", "&"];
 fs.readdir(path, function (err, files) {
   //handling error
   if (err) {
@@ -25,27 +48,33 @@ fs.readdir(path, function (err, files) {
   }
   //listing all files using forEach
   files.forEach(function (file) {
-    let len = file.length;
-    // Convert name to var
-    let validVarName, filenameWithoutExt;
-
-    //find extension and remove
+    //check if valid file extension
     let lastPeriodPosition = file.lastIndexOf(".");
-    validVarName = file.slice(0, len - (len - lastPeriodPosition));
-    filenameWithoutExt = validVarName;
+    let ext = file.slice(lastPeriodPosition + 1);
+    //only include if valid extension
+    if (importThese.includes(ext)) {
+      let len = file.length;
+      // Convert name to var
+      let validVarName, filenameWithoutExt;
 
-    //remove spaces or dashes
-    for (let i = 0; i < validVarName.length; i++) {
-      if (forbidden.includes(validVarName[i])) {
-        validVarName = validVarName.replaceAtIndex(i, "_");
+      //find extension and remove
+
+      validVarName = file.slice(0, len - (len - lastPeriodPosition));
+      filenameWithoutExt = validVarName;
+
+      //remove spaces or dashes
+      for (let i = 0; i < validVarName.length; i++) {
+        if (forbidden.includes(validVarName[i])) {
+          validVarName = validVarName.replaceAtIndex(i, "_");
+        }
       }
+      validVarName = "_" + validVarName;
+      // console.log(validVarName);
+
+      output += `import ${validVarName} from '${path}/${file}'\n`;
+
+      data += `{img: ${validVarName},\n name: "${filenameWithoutExt}"},\n`;
     }
-    validVarName = "_" + validVarName;
-    // console.log(validVarName);
-
-    output += `import ${validVarName} from '${path}/${file}'\n`;
-
-    data += `{img: ${validVarName},\n name: "${filenameWithoutExt}"},\n`;
   });
 
   output += `\n\nconst data = [\n${data}\n]\nexport default data;`;
